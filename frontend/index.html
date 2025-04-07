@@ -10,7 +10,7 @@
   <form id="registrationForm">
     <input type="text" class="form-control my-2" placeholder="Username" id="username" required>
     <input type="password" class="form-control my-2" placeholder="Password" id="password" required>
-    
+
     <label>Select Courses:</label><br>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value="Computer Networks" id="cn">
@@ -39,7 +39,7 @@
       const password = document.getElementById('password').value;
       const courses = [...document.querySelectorAll('input[type="checkbox"]:checked')].map(cb => cb.value);
 
-      const res = await fetch('http://localhost:5000/register', {
+      const res = await fetch('/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, courses })
