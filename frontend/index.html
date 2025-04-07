@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Course Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-5">
+  <h2>Register for Courses</h2>
+  <form id="registrationForm">
+    <input type="text" class="form-control my-2" placeholder="Username" id="username" required>
+    <input type="password" class="form-control my-2" placeholder="Password" id="password" required>
+    
+    <label>Select Courses:</label><br>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Computer Networks" id="cn">
+      <label class="form-check-label" for="cn">Computer Networks</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="Cloud Computing" id="cc">
+      <label class="form-check-label" for="cc">Cloud Computing</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="PALR" id="palr">
+      <label class="form-check-label" for="palr">PALR</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="NLP" id="nlp">
+      <label class="form-check-label" for="nlp">NLP</label>
+    </div>
+    <button class="btn btn-primary mt-3" type="submit">Register</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const courses = [...document.querySelectorAll('input[type="checkbox"]:checked')].map(cb => cb.value);
+
+      const res = await fetch('http://localhost:5000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, courses })
+      });
+
+      const data = await res.json();
+      alert(data.message || data.error);
+    });
+  </script>
+</body>
+</html>
